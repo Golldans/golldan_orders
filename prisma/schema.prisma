@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model order {
+  id_order          Int         @default(autoincrement()) @id
+  value             Float
+  user_id           String
+  member_id         String
+  employee_id       String
+  uuid_user         user?       @relation(fields: [user_id], references: [uuid_user])
+  uuid_member       member?     @relation(fields: [member_id], references: [uuid_member])
+  uuid_employee     employee    @relation(fields: [employee_id], references: [uuid_employee])
+  created_at        DateTime    @default(now())
+  updated_at        DateTime    @default(now())
+  deleted_at        DateTime
+}
+
+model user {
+  uuid_user         String       @id
+  email             String
+  name              String
+  birthday          String
+  orders            order[]
+  created_at        DateTime    @default(now())
+  updated_at        DateTime    @default(now())
+  deleted_at        DateTime
+}
+
+model employee {
+  uuid_employee     String      @id
+  name              String
+  work_card         String
+  salary            Float
+  id_role           Int
+  orders            order[]
+  role              role?       @relation(fields: [id_role], references: [id_role])
+  created_at        DateTime    @default(now())
+  updated_at        DateTime    @default(now())
+  deleted_at        DateTime
+}
+
+model member {
+  uuid_member       String      @id
+  orders             order[]
+  created_at        DateTime    @default(now())
+  updated_at        DateTime    @default(now())
+  deleted_at        DateTime
+}
+
+model role {
+  id_role           Int         @default(autoincrement()) @id
+  employee          employee[]
+  created_at        DateTime    @default(now())
+  updated_at        DateTime    @default(now())
+  deleted_at        DateTime
+}
+
