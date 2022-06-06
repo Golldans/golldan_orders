@@ -21,7 +21,7 @@ model order {
   uuid_employee     employee    @relation(fields: [employee_id], references: [uuid_employee])
   created_at        DateTime    @default(now())
   updated_at        DateTime    @default(now())
-  deleted_at        DateTime
+  deleted_at        DateTime?
 }
 
 model user {
@@ -32,7 +32,7 @@ model user {
   orders            order[]
   created_at        DateTime    @default(now())
   updated_at        DateTime    @default(now())
-  deleted_at        DateTime
+  deleted_at        DateTime?
 }
 
 model employee {
@@ -45,7 +45,7 @@ model employee {
   role              role?       @relation(fields: [id_role], references: [id_role])
   created_at        DateTime    @default(now())
   updated_at        DateTime    @default(now())
-  deleted_at        DateTime
+  deleted_at        DateTime?
 }
 
 model member {
@@ -53,7 +53,7 @@ model member {
   orders             order[]
   created_at        DateTime    @default(now())
   updated_at        DateTime    @default(now())
-  deleted_at        DateTime
+  deleted_at        DateTime?
 }
 
 model role {
@@ -61,6 +61,6 @@ model role {
   employee          employee[]
   created_at        DateTime    @default(now())
   updated_at        DateTime    @default(now())
-  deleted_at        DateTime
+  deleted_at        DateTime?
 }
 
